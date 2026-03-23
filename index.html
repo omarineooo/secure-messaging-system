@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مشروع المراسلة الآمنة - جامعة برج العرب</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; text-align: center; }
+        textarea, input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background-color: #219150; }
+        .result-box { background: #e8f6f3; padding: 10px; border-left: 5px solid #27ae60; margin-top: 10px; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>نظام المراسلة المشفر (RSA)</h2>
+        <label>اكتب رسالتك هنا:</label>
+        <textarea id="messageInput" rows="3" placeholder="اكتب الرسالة السرية..."></textarea>
+        <button onclick="simulateProcess()">تشفير وإرسال</button>
+
+        <div id="output" style="display:none;">
+            <h4>1. النص المشفر (الذي يراه المتسلل):</h4>
+            <div id="encryptedRes" class="result-box"></div>
+            
+            <h4>2. النص بعد فك التشفير (عند المستلم):</h4>
+            <div id="decryptedRes" class="result-box"></div>
+        </div>
+    </div>
+
+   <script>
+        async function simulateProcess() {
+            const message = document.getElementById('messageInput').value;
+            if (!message) return alert("اكتب رسالة أولاً!");
+
+            const response = await fetch('/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('output').style.display = 'block';
+                document.getElementById('encryptedRes').innerText = data.encrypted;
+                document.getElementById('decryptedRes').innerText = data.decrypted;
+            }
+        }
+    </script> </body>
+</html>
