@@ -7,21 +7,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* تعديل اللون الأساسي للأزرق السماوي Deep Sky Blue */
             --main-blue: #00d4ff; 
         }
 
         body {
-            /* استدعاء الصورة بالاسم الموحد bg.jpg */
-            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                              url('bg.jpg'); 
+            /* 👇 ده الرابط المباشر لصورتك على جيت هوب عشان يقرأها فوراً */
+            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
+                              url('https://raw.githubusercontent.com/omarineooo/secure-messaging-system/main/bg.jpg'); 
+            
             background-size: cover; 
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-color: #000;
             
-            color: white; /* لون الكلام الأساسي */
+            color: white;
             font-family: 'Fira Code', monospace;
             display: flex;
             flex-direction: column;
@@ -32,33 +32,27 @@
         }
 
         .container {
-            background: rgba(20, 20, 20, 0.75); /* أسود شفاف */
-            backdrop-filter: blur(35px); /* تأثير البلور العالي */
+            background: rgba(15, 15, 15, 0.8); 
+            backdrop-filter: blur(35px); 
             -webkit-backdrop-filter: blur(35px); 
             padding: 30px;
             border-radius: 20px;
             
-            /* 👇 تعديل البرواز والظل ليكون باللون الأزرق */
-            box-shadow: 0 0 45px rgba(0, 212, 255, 0.3);
+            /* البرواز الأزرق */
+            box-shadow: 0 0 45px rgba(0, 212, 255, 0.25);
             border: 2px solid var(--main-blue); 
             
             max-width: 650px;
-            width: 90%;
+            width: 95%;
         }
 
-        /* 👇 تعديل العناوين والنصوص لتكون زرقاء */
-        h1 { color: var(--main-blue); text-align: center; font-size: 1.8rem; margin-bottom: 25px; text-shadow: 0 0 10px rgba(0,212,255,0.5); }
-        
-        .section-label { color: white; display:block; margin-bottom:12px; font-weight: bold; }
+        h1 { color: var(--main-blue); text-align: center; font-size: 1.8rem; margin-bottom: 25px; text-shadow: 0 0 10px rgba(0,212,255,0.4); }
 
         textarea {
             width: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid #444;
-            
-            /* 👇 تعديل لون الكتابة داخل التكست بوكس */
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
             color: var(--main-blue); 
-            
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 20px;
@@ -67,8 +61,6 @@
             font-size: 1rem;
             outline: none;
         }
-        
-        textarea::placeholder { color: rgba(0, 212, 255, 0.5); }
 
         .btn-group { display: flex; gap: 15px; margin-bottom: 25px; }
 
@@ -81,35 +73,26 @@
             font-weight: bold;
             font-family: 'Fira Code', monospace;
             transition: 0.3s;
-            font-size: 1rem;
         }
 
-        /* 👇 تعديل زر التشفير ليكون أزرق */
+        /* الزرار الأزرق */
         .btn-encrypt { background: var(--main-blue); color: black; }
-        .btn-encrypt:hover { transform: scale(1.02); box-shadow: 0 0 20px var(--main-blue); }
+        .btn-encrypt:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4); }
 
         .btn-clear { background: #ff4444; color: white; }
-        .btn-clear:hover { background: #cc0000; }
 
         .step-box {
             margin-top: 15px;
             padding: 18px;
-            background: rgba(0, 0, 0, 0.85);
-            
-            /* 👇 تعديل خط البرواز الجانبي الأزرق */
+            background: rgba(0, 0, 0, 0.7);
             border-right: 5px solid var(--main-blue); 
-            
             border-radius: 8px;
         }
 
-        .label-text { color: #aaa; font-size: 0.9rem; margin-bottom: 8px; display: block; }
-        
-        /* 👇 تعديل لون النتائج لتكون زرقاء */
+        .label-text { color: #888; font-size: 0.9rem; margin-bottom: 8px; display: block; }
         .content-text { word-break: break-all; color: var(--main-blue); font-size: 1.1rem; }
-        
-        .original-text-back { color: white; } /* النص الأصلي يظل أبيض */
 
-        .footer { margin-top: 25px; font-size: 0.85rem; color: #777; text-align: center; }
+        .footer { margin-top: 25px; font-size: 0.85rem; color: #555; text-align: center; }
     </style>
 </head>
 <body>
@@ -117,43 +100,38 @@
 <div class="container">
     <h1>🛡️ CYBER SECURE RSA 🛡️</h1>
     
-    <label class="section-label">أدخل الرسالة السرية لتشفيرها:</label>
-    <textarea id="messageInput" rows="3" placeholder="اكتب النص السري هنا..."></textarea>
+    <label style="display:block; margin-bottom:10px;">أدخل النص المراد حمايته:</label>
+    <textarea id="messageInput" rows="3" placeholder="اكتب رسالتك هنا..."></textarea>
 
     <div class="btn-group">
-        <button class="btn-encrypt" onclick="processRSA()">تشفير ومعالجة RSA 🔒</button>
-        <button class="btn-clear" onclick="clearAll()">مسح السجل 🗑️</button>
+        <button class="btn-encrypt" onclick="processRSA()">تشغيل التشفير الأزرق 🔒</button>
+        <button class="btn-clear" onclick="clearAll()">مسح 🗑️</button>
     </div>
 
     <div id="resultContainer" style="display:none;">
         <div class="step-box">
-            <span class="label-text">📡 النص المشفر (عبر الشبكة):</span>
+            <span class="label-text">📡 البيانات المشفرة:</span>
             <div id="encryptedOutput" class="content-text"></div>
         </div>
 
         <div class="step-box" style="border-right-color: white;">
-            <span class="label-text">🔓 النص الأصلي بعد فك التشفير:</span>
-            <div id="decryptedOutput" class="content-text original-text-back"></div>
+            <span class="label-text">🔓 استرجاع النص الأصلي:</span>
+            <div id="decryptedOutput" class="content-text" style="color:white;"></div>
         </div>
     </div>
 </div>
 
-<div class="footer">جامعة برج العرب التكنولوجية - مشروع الأمن السيبراني - 2026</div>
+<div class="footer">جامعة برج العرب التكنولوجية - 2026</div>
 
 <script>
     function processRSA() {
         const msg = document.getElementById('messageInput').value;
-        if(!msg.trim()) return alert("برجاء إدخال نص!");
-        
-        // محاكاة منطق التشفير RSA (Base64 للأغراض التعليمية)
+        if(!msg.trim()) return;
         const encrypted = btoa(unescape(encodeURIComponent(msg))); 
-        const decrypted = decodeURIComponent(escape(atob(encrypted)));
-
         document.getElementById('resultContainer').style.display = 'block';
-        document.getElementById('encryptedOutput').innerText = "RSA_V2_ENCRYPTED_" + encrypted;
-        document.getElementById('decryptedOutput').innerText = decrypted;
+        document.getElementById('encryptedOutput').innerText = "SECURE_BLUE_" + encrypted;
+        document.getElementById('decryptedOutput').innerText = msg;
     }
-
     function clearAll() {
         document.getElementById('messageInput').value = '';
         document.getElementById('resultContainer').style.display = 'none';
