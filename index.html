@@ -11,7 +11,7 @@
         }
 
         body {
-            /* الربط بالاسم الجديد bg.jpg */
+            /* التأكد من كتابة اسم الصورة بالظبط كما في GitHub */
             background-image: url('bg.jpg'); 
             background-size: cover; 
             background-position: center;
@@ -30,19 +30,19 @@
         }
 
         .container {
-            /* تأثير زجاجي شفاف عشان الخلفية تبان */
-            background: rgba(0, 0, 0, 0.8); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            /* زيادة الشفافية والـ Blur عشان الخلفية تبان أحلى */
+            background: rgba(0, 0, 0, 0.7); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 35px rgba(0, 255, 65, 0.4);
             border: 1px solid var(--neon-green);
             max-width: 650px;
             width: 90%;
         }
 
-        h1 { color: var(--neon-green); text-align: center; font-size: 1.6rem; margin-bottom: 25px; }
+        h1 { color: var(--neon-green); text-align: center; font-size: 1.6rem; margin-bottom: 25px; text-shadow: 0 0 10px rgba(0,255,65,0.5); }
 
         textarea {
             width: 100%;
@@ -77,7 +77,7 @@
         .step-box {
             margin-top: 15px;
             padding: 15px;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.85);
             border-right: 4px solid var(--neon-green);
             border-radius: 5px;
         }
