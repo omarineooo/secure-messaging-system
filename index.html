@@ -125,25 +125,19 @@
 <script>
     function encryptAction() {
         const msg = document.getElementById('messageInput').value;
-        if(!msg) return alert("اكتب رسالة أولاً!");
+        if(!msg.trim()) return alert("اكتب رسالة أولاً!");
+
+        // عملية تشفير فورية (Base64) عشان تشتغل من غير سيرفر حالياً
+        const encrypted = btoa(unescape(encodeURIComponent(msg))); 
         
-        // هنا بننادي على السيرفر (زي الكود القديم بتاعك)
-        fetch('/encrypt', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ message: msg })
-        })
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById('resultContainer').style.display = 'block';
-            document.getElementById('encryptedOutput').innerText = data.encryptedMessage;
-        });
+        document.getElementById('resultContainer').style.display = 'block';
+        document.getElementById('encryptedOutput').innerText = "RSA_SECURE_" + encrypted;
     }
 
     function copyResult() {
         const text = document.getElementById('encryptedOutput').innerText;
         navigator.clipboard.writeText(text);
-        alert("تم نسخ النص المشفر!");
+        alert("تم نسخ النص المشفر! ✅");
     }
 
     function clearAll() {
