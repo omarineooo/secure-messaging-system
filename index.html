@@ -11,43 +11,38 @@
         }
 
         body {
-            /* تعديل الخلفية بالصورة التي رفعتها */
-            background-image: url('Future of Cybersecurity.jpg'); 
+            /* الربط بالاسم الجديد bg.jpg */
+            background-image: url('bg.jpg'); 
             background-size: cover; 
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            background-color: #0d0208; /* لون احتياطي */
+            
             color: white;
             font-family: 'Fira Code', monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
             margin: 0;
             min-height: 100vh;
         }
 
         .container {
-            /* تصميم زجاجي شفاف */
-            background: rgba(0, 0, 0, 0.75); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            /* تأثير زجاجي شفاف عشان الخلفية تبان */
+            background: rgba(0, 0, 0, 0.8); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
             border: 1px solid var(--neon-green);
             max-width: 650px;
-            width: 100%;
-            margin-top: 40px;
+            width: 90%;
         }
 
-        h1 { 
-            color: var(--neon-green); 
-            text-align: center; 
-            font-size: 1.6rem; 
-            margin-bottom: 25px; 
-            text-shadow: 0 0 10px rgba(0,255,65,0.5); 
-        }
+        h1 { color: var(--neon-green); text-align: center; font-size: 1.6rem; margin-bottom: 25px; }
 
         textarea {
             width: 100%;
@@ -77,14 +72,12 @@
         }
 
         .btn-encrypt { background: var(--neon-green); color: black; }
-        .btn-encrypt:hover { box-shadow: 0 0 20px var(--neon-green); transform: translateY(-2px); }
-
         .btn-clear { background: #ff4444; color: white; }
 
         .step-box {
             margin-top: 15px;
             padding: 15px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             border-right: 4px solid var(--neon-green);
             border-radius: 5px;
         }
@@ -93,7 +86,7 @@
         .content-text { word-break: break-all; color: var(--neon-green); font-size: 1.1rem; }
         .original-back { color: #00d4ff; }
 
-        .footer { margin-top: auto; padding: 25px; font-size: 0.85rem; color: #aaa; text-align: center; }
+        .footer { margin-top: 20px; font-size: 0.85rem; color: #aaa; text-align: center; }
     </style>
 </head>
 <body>
@@ -122,18 +115,14 @@
     </div>
 </div>
 
-<div class="footer">جامعة برج العرب التكنولوجية - مشروع الأمن السيبراني</div>
+<div class="footer">جامعة برج العرب التكنولوجية - مشروع الأمن السيبراني - 2026</div>
 
 <script>
     function processRSA() {
         const msg = document.getElementById('messageInput').value;
         if(!msg.trim()) return alert("اكتب رسالة أولاً!");
-
-        // عملية التشفير
         const encrypted = btoa(unescape(encodeURIComponent(msg))); 
-        // عملية فك التشفير
         const decrypted = decodeURIComponent(escape(atob(encrypted)));
-
         document.getElementById('resultContainer').style.display = 'block';
         document.getElementById('encryptedOutput').innerText = "RSA_SECURE_" + encrypted;
         document.getElementById('decryptedOutput').innerText = decrypted;
