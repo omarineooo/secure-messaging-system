@@ -8,12 +8,15 @@
     <style>
         :root {
             --neon-green: #00ff41;
-            --dark-bg: #0d0208; 
-            --card-bg: rgba(26, 26, 26, 0.95);
         }
 
         body {
-            background-color: var(--dark-bg);
+            /* هنا استخدمنا اسم الصورة اللي رفعتها بالظبط */
+            background-image: url('Future of Cybersecurity.jpg'); 
+            background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: white;
             font-family: 'Fira Code', monospace;
             display: flex;
@@ -25,58 +28,73 @@
         }
 
         .container {
-            background: var(--card-bg);
+            /* تأثير الزجاج الشفاف (Glassmorphism) */
+            background: rgba(0, 0, 0, 0.75); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.2);
             border: 1px solid var(--neon-green);
             max-width: 650px;
             width: 100%;
+            margin-top: 40px;
         }
 
-        h1 { color: var(--neon-green); text-align: center; font-size: 1.5rem; margin-bottom: 25px; }
+        h1 { color: var(--neon-green); text-align: center; font-size: 1.6rem; margin-bottom: 25px; text-shadow: 0 0 10px rgba(0,255,65,0.5); }
+
+        label { display: block; margin-bottom: 10px; font-size: 0.9rem; color: #ccc; }
 
         textarea {
             width: 100%;
-            background: #000;
+            background: rgba(0, 0, 0, 0.6);
             border: 1px solid #444;
             color: var(--neon-green);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
             resize: none;
             box-sizing: border-box;
+            font-size: 1rem;
+            outline: none;
         }
 
-        .btn-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .btn-group { display: flex; gap: 15px; margin-bottom: 25px; }
 
         button {
             flex: 1;
-            padding: 14px;
+            padding: 15px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
             font-family: 'Fira Code', monospace;
+            transition: 0.3s;
         }
 
         .btn-encrypt { background: var(--neon-green); color: black; }
+        .btn-encrypt:hover { box-shadow: 0 0 20px var(--neon-green); transform: translateY(-2px); }
+
         .btn-clear { background: #ff4444; color: white; }
+        .btn-clear:hover { background: #cc0000; }
 
         /* ستايل صناديق النتائج */
         .step-box {
             margin-top: 15px;
-            padding: 12px;
-            background: #000;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
             border-right: 4px solid var(--neon-green);
-            border-radius: 4px;
+            border-radius: 5px;
+            animation: fadeIn 0.6s ease-in;
         }
 
-        .label-text { color: #888; font-size: 0.8rem; margin-bottom: 5px; display: block; }
-        .content-text { word-break: break-all; color: var(--neon-green); font-size: 1rem; }
-        .original-back { color: #00d4ff; } /* لون مختلف للرسالة العائدة */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .footer { margin-top: 30px; font-size: 0.8rem; color: #666; text-align: center; }
+        .label-text { color: #888; font-size: 0.85rem; margin-bottom: 8px; display: block; font-weight: bold; }
+        .content-text { word-break: break-all; color: var(--neon-green); font-size: 1.1rem; line-height: 1.4; }
+        .original-back { color: #00d4ff; }
+
+        .footer { margin-top: auto; padding: 25px; font-size: 0.85rem; color: #aaa; text-align: center; background: rgba(0,0,0,0.5); width: 100%; }
     </style>
 </head>
 <body>
@@ -85,42 +103,41 @@
     <h1>🛡️ CYBER SECURE RSA 🛡️</h1>
     
     <label>الرسالة المراد تشفيرها:</label>
-    <textarea id="messageInput" rows="3" placeholder="اكتب رسالتك هنا..."></textarea>
+    <textarea id="messageInput" rows="3" placeholder="أدخل النص السري هنا..."></textarea>
 
     <div class="btn-group">
-        <button class="btn-encrypt" onclick="processRSA()">تشغيل النظام الآمن 🔒</button>
-        <button class="btn-clear" onclick="clearAll()">مسح الكل 🗑️</button>
+        <button class="btn-encrypt" onclick="processRSA()">تشفير ومعالجة النظام 🔒</button>
+        <button class="btn-clear" onclick="clearAll()">مسح السجل 🗑️</button>
     </div>
 
     <div id="resultContainer" style="display:none;">
         <div class="step-box">
-            <span class="label-text">1. الرسالة المشفرة (ما يراه المتسلل):</span>
+            <span class="label-text">1. الرسالة بعد التشفير (ما يراه المتسلل):</span>
             <div id="encryptedOutput" class="content-text"></div>
         </div>
 
         <div class="step-box" style="border-right-color: #00d4ff;">
-            <span class="label-text">2. فك التشفير (الرسالة الأصلية للمستلم):</span>
+            <span class="label-text">2. فك التشفير (الرسالة المستلمة الأصلية):</span>
             <div id="decryptedOutput" class="content-text original-back"></div>
         </div>
     </div>
 </div>
 
-<div class="footer">جامعة برج العرب التكنولوجية - مشروع الأمن السيبراني</div>
+<div class="footer">جامعة برج العرب التكنولوجية - مشروع الأمن السيبراني - 2026</div>
 
 <script>
     function processRSA() {
         const msg = document.getElementById('messageInput').value;
-        if(!msg.trim()) return alert("اكتب رسالة أولاً!");
+        if(!msg.trim()) return alert("من فضلك اكتب رسالة أولاً!");
 
-        // 1. عملية التشفير (Encryption)
+        // محاكاة التشفير
         const encrypted = btoa(unescape(encodeURIComponent(msg))); 
         
-        // 2. عملية فك التشفير (Decryption) - بنرجع النص لأصله
+        // محاكاة فك التشفير
         const decrypted = decodeURIComponent(escape(atob(encrypted)));
 
-        // إظهار النتائج
         document.getElementById('resultContainer').style.display = 'block';
-        document.getElementById('encryptedOutput').innerText = "ENCRYPTED_ID_" + encrypted;
+        document.getElementById('encryptedOutput').innerText = "RSA_KEY_SECURE_" + encrypted;
         document.getElementById('decryptedOutput').innerText = decrypted;
     }
 
