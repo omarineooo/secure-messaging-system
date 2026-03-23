@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure RSA Messaging</title>
+    <title>Secure RSA Messaging | نظام المراسلة الآمن</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            /* تعديل اللون الأساسي للأزرق السماوي Deep Sky Blue */
+            --main-blue: #00d4ff; 
+        }
+
         body {
-            /* 👇 ده الرابط المباشر لملفك على GitHub */
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                              url('https://raw.githubusercontent.com/omarineooo/secure-messaging-system/main/bg.jpg'); 
-            background-size: cover;
+            /* استدعاء الصورة بالاسم الموحد bg.jpg */
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                              url('bg.jpg'); 
+            background-size: cover; 
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-color: #000;
-            color: white;
+            
+            color: white; /* لون الكلام الأساسي */
             font-family: 'Fira Code', monospace;
             display: flex;
             flex-direction: column;
@@ -26,82 +32,133 @@
         }
 
         .container {
-            background: rgba(20, 20, 20, 0.7);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
+            background: rgba(20, 20, 20, 0.75); /* أسود شفاف */
+            backdrop-filter: blur(35px); /* تأثير البلور العالي */
+            -webkit-backdrop-filter: blur(35px); 
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
-            border: 1px solid rgba(0, 255, 65, 0.4);
-            max-width: 600px;
+            
+            /* 👇 تعديل البرواز والظل ليكون باللون الأزرق */
+            box-shadow: 0 0 45px rgba(0, 212, 255, 0.3);
+            border: 2px solid var(--main-blue); 
+            
+            max-width: 650px;
             width: 90%;
         }
 
-        h1 { color: #00ff41; text-align: center; margin-bottom: 25px; }
+        /* 👇 تعديل العناوين والنصوص لتكون زرقاء */
+        h1 { color: var(--main-blue); text-align: center; font-size: 1.8rem; margin-bottom: 25px; text-shadow: 0 0 10px rgba(0,212,255,0.5); }
+        
+        .section-label { color: white; display:block; margin-bottom:12px; font-weight: bold; }
+
         textarea {
             width: 100%;
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid #444;
-            color: #00ff41;
+            
+            /* 👇 تعديل لون الكتابة داخل التكست بوكس */
+            color: var(--main-blue); 
+            
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 20px;
+            resize: none;
             box-sizing: border-box;
+            font-size: 1rem;
             outline: none;
         }
+        
+        textarea::placeholder { color: rgba(0, 212, 255, 0.5); }
 
-        .btn-group { display: flex; gap: 10px; }
+        .btn-group { display: flex; gap: 15px; margin-bottom: 25px; }
+
         button {
             flex: 1;
-            padding: 12px;
+            padding: 15px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
+            font-family: 'Fira Code', monospace;
+            transition: 0.3s;
+            font-size: 1rem;
         }
-        .btn-encrypt { background: #00ff41; color: black; }
+
+        /* 👇 تعديل زر التشفير ليكون أزرق */
+        .btn-encrypt { background: var(--main-blue); color: black; }
+        .btn-encrypt:hover { transform: scale(1.02); box-shadow: 0 0 20px var(--main-blue); }
+
         .btn-clear { background: #ff4444; color: white; }
+        .btn-clear:hover { background: #cc0000; }
 
         .step-box {
             margin-top: 15px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.8);
-            border-right: 4px solid #00ff41;
-            border-radius: 5px;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.85);
+            
+            /* 👇 تعديل خط البرواز الجانبي الأزرق */
+            border-right: 5px solid var(--main-blue); 
+            
+            border-radius: 8px;
         }
+
+        .label-text { color: #aaa; font-size: 0.9rem; margin-bottom: 8px; display: block; }
+        
+        /* 👇 تعديل لون النتائج لتكون زرقاء */
+        .content-text { word-break: break-all; color: var(--main-blue); font-size: 1.1rem; }
+        
+        .original-text-back { color: white; } /* النص الأصلي يظل أبيض */
+
+        .footer { margin-top: 25px; font-size: 0.85rem; color: #777; text-align: center; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🛡️ CYBER SECURE RSA</h1>
-        <textarea id="messageInput" rows="3" placeholder="اكتب النص هنا..."></textarea>
-        <div class="btn-group">
-            <button class="btn-encrypt" onclick="processRSA()">تشفير ومعالجة 🔒</button>
-            <button class="btn-clear" onclick="clearAll()">مسح 🗑️</button>
-        </div>
-        <div id="resultContainer" style="display:none;">
-            <div class="step-box">
-                <div id="encryptedOutput" style="word-break: break-all; color: #00ff41;"></div>
-            </div>
-            <div class="step-box" style="border-right-color: #00d4ff;">
-                <div id="decryptedOutput" style="color: #00d4ff;"></div>
-            </div>
-        </div>
+
+<div class="container">
+    <h1>🛡️ CYBER SECURE RSA 🛡️</h1>
+    
+    <label class="section-label">أدخل الرسالة السرية لتشفيرها:</label>
+    <textarea id="messageInput" rows="3" placeholder="اكتب النص السري هنا..."></textarea>
+
+    <div class="btn-group">
+        <button class="btn-encrypt" onclick="processRSA()">تشفير ومعالجة RSA 🔒</button>
+        <button class="btn-clear" onclick="clearAll()">مسح السجل 🗑️</button>
     </div>
 
-    <script>
-        function processRSA() {
-            const msg = document.getElementById('messageInput').value;
-            if(!msg.trim()) return;
-            const encrypted = btoa(unescape(encodeURIComponent(msg))); 
-            document.getElementById('resultContainer').style.display = 'block';
-            document.getElementById('encryptedOutput').innerText = "RSA_V2_" + encrypted;
-            document.getElementById('decryptedOutput').innerText = msg;
-        }
-        function clearAll() {
-            document.getElementById('messageInput').value = '';
-            document.getElementById('resultContainer').style.display = 'none';
-        }
-    </script>
+    <div id="resultContainer" style="display:none;">
+        <div class="step-box">
+            <span class="label-text">📡 النص المشفر (عبر الشبكة):</span>
+            <div id="encryptedOutput" class="content-text"></div>
+        </div>
+
+        <div class="step-box" style="border-right-color: white;">
+            <span class="label-text">🔓 النص الأصلي بعد فك التشفير:</span>
+            <div id="decryptedOutput" class="content-text original-text-back"></div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">جامعة برج العرب التكنولوجية - مشروع الأمن السيبراني - 2026</div>
+
+<script>
+    function processRSA() {
+        const msg = document.getElementById('messageInput').value;
+        if(!msg.trim()) return alert("برجاء إدخال نص!");
+        
+        // محاكاة منطق التشفير RSA (Base64 للأغراض التعليمية)
+        const encrypted = btoa(unescape(encodeURIComponent(msg))); 
+        const decrypted = decodeURIComponent(escape(atob(encrypted)));
+
+        document.getElementById('resultContainer').style.display = 'block';
+        document.getElementById('encryptedOutput').innerText = "RSA_V2_ENCRYPTED_" + encrypted;
+        document.getElementById('decryptedOutput').innerText = decrypted;
+    }
+
+    function clearAll() {
+        document.getElementById('messageInput').value = '';
+        document.getElementById('resultContainer').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
