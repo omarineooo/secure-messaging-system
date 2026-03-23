@@ -8,12 +8,18 @@
     <style>
         :root {
             --neon-green: #00ff41;
-            --dark-bg: #0d0208;
-            --card-bg: #1a1a1a;
+            /* 👇 غير الكود ده للون اللي تحبه (مثلاً #000000 للأسود السادة) */
+            --dark-bg: #0d0208; 
+            --card-bg: rgba(26, 26, 26, 0.9); /* جعل المربع شفاف قليلاً ليظهر جمال الخلفية */
         }
 
         body {
+            /* 🎨 لو عايز صورة خلفية، شيل علامة التعليق عن السطر اللي تحت وحط لينك الصورة */
+            /* background-image: url('ضع_لينك_الصورة_هنا'); */
             background-color: var(--dark-bg);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
             font-family: 'Fira Code', monospace;
             display: flex;
@@ -21,6 +27,7 @@
             align-items: center;
             padding: 20px;
             margin: 0;
+            min-height: 100vh;
         }
 
         .container {
@@ -31,6 +38,7 @@
             border: 1px solid var(--neon-green);
             max-width: 600px;
             width: 100%;
+            margin-top: 50px;
         }
 
         h1 {
@@ -39,48 +47,56 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             font-size: 1.5rem;
+            margin-bottom: 25px;
         }
+
+        label { display: block; margin-bottom: 8px; font-size: 0.9rem; }
 
         textarea {
             width: 100%;
             background: #000;
             border: 1px solid #444;
             color: var(--neon-green);
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
             resize: none;
             box-sizing: border-box;
+            font-size: 1rem;
         }
 
         .btn-group {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         button {
             flex: 1;
-            padding: 12px;
+            padding: 14px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
             transition: 0.3s;
+            font-family: 'Fira Code', monospace;
         }
 
         .btn-encrypt { background: var(--neon-green); color: black; }
-        .btn-encrypt:hover { box-shadow: 0 0 15px var(--neon-green); }
+        .btn-encrypt:hover { box-shadow: 0 0 15px var(--neon-green); transform: translateY(-2px); }
 
         .btn-clear { background: #ff4444; color: white; }
+        .btn-clear:hover { background: #cc0000; }
 
         .result-box {
-            margin-top: 20px;
             padding: 15px;
             background: #000;
             border-right: 4px solid var(--neon-green);
             position: relative;
+            animation: fadeIn 0.5s ease-in;
         }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .copy-btn {
             position: absolute;
@@ -89,34 +105,42 @@
             background: #333;
             color: #fff;
             font-size: 10px;
-            padding: 5px;
-            border-radius: 3px;
+            padding: 5px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid #555;
         }
 
+        .copy-btn:hover { background: #555; }
+
         .footer {
-            margin-top: 20px;
+            margin-top: auto;
+            padding: 20px;
             font-size: 0.8rem;
             color: #666;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🛡️ CYBER SECURE RSA</h1>
+    <h1>🛡️ CYBER SECURE RSA 🛡️</h1>
     
     <label>الرسالة المراد تشفيرها:</label>
-    <textarea id="messageInput" rows="4" placeholder="اكتب رسالتك السرية هنا..."></textarea>
+    <textarea id="messageInput" rows="4" placeholder="اكتب رسالتك هنا..."></textarea>
 
     <div class="btn-group">
         <button class="btn-encrypt" onclick="encryptAction()">تشفير وإرسال 🔒</button>
         <button class="btn-clear" onclick="clearAll()">مسح الكل 🗑️</button>
     </div>
 
-    <div class="result-box" id="resultContainer" style="display:none;">
-        <button class="copy-btn" onclick="copyResult()">COPY</button>
-        <p style="color: #888; font-size: 0.8rem; margin: 0;">الرسالة المشفرة:</p>
-        <div id="encryptedOutput" style="word-break: break-all; margin-top: 10px; color: var(--neon-green);"></div>
+    <div id="resultContainer" style="display:none;">
+        <div class="result-box">
+            <button class="copy-btn" onclick="copyResult()">COPY</button>
+            <p style="color: #888; font-size: 0.8rem; margin: 0;">الرسالة المشفرة:</p>
+            <div id="encryptedOutput" style="word-break: break-all; margin-top: 10px; color: var(--neon-green); font-size: 1.1rem;"></div>
+        </div>
     </div>
 </div>
 
@@ -125,19 +149,24 @@
 <script>
     function encryptAction() {
         const msg = document.getElementById('messageInput').value;
-        if(!msg.trim()) return alert("اكتب رسالة أولاً!");
+        if(!msg.trim()) {
+            alert("من فضلك اكتب رسالة أولاً!");
+            return;
+        }
 
-        // عملية تشفير فورية (Base64) عشان تشتغل من غير سيرفر حالياً
+        // تشفير فوري في المتصفح (Base64) لضمان العمل بدون سيرفر حالياً
         const encrypted = btoa(unescape(encodeURIComponent(msg))); 
         
         document.getElementById('resultContainer').style.display = 'block';
         document.getElementById('encryptedOutput').innerText = "RSA_SECURE_" + encrypted;
+        
+        // النص الأصلي بيفضل موجود في الـ textarea زي ما طلبت
     }
 
     function copyResult() {
         const text = document.getElementById('encryptedOutput').innerText;
         navigator.clipboard.writeText(text);
-        alert("تم نسخ النص المشفر! ✅");
+        alert("تم نسخ النص المشفر بنجاح! ✅");
     }
 
     function clearAll() {
