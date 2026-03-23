@@ -11,13 +11,14 @@
         }
 
         body {
-            /* التأكد من كتابة اسم الصورة بالظبط كما في GitHub */
-            background-image: url('bg.jpg'); 
+            /* استخدمنا رابط مباشر من GitHub لضمان ظهور الصورة */
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                              url('https://raw.githubusercontent.com/omarineooo/secure-messaging-system/main/bg.jpg'); 
             background-size: cover; 
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            background-color: #0d0208; /* لون احتياطي */
+            background-color: #0d0208;
             
             color: white;
             font-family: 'Fira Code', monospace;
@@ -30,7 +31,6 @@
         }
 
         .container {
-            /* زيادة الشفافية والـ Blur عشان الخلفية تبان أحلى */
             background: rgba(0, 0, 0, 0.7); 
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
@@ -99,7 +99,7 @@
 
     <div class="btn-group">
         <button class="btn-encrypt" onclick="processRSA()">تشفير ومعالجة 🔒</button>
-        <button class="btn-clear" onclick="clearAll()">مسح الكل 🗑️</button>
+        <button class="btn-clear" onclick="clearAll()">مسح السجل 🗑️</button>
     </div>
 
     <div id="resultContainer" style="display:none;">
