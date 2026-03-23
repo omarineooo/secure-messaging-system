@@ -3,23 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure RSA Messaging | نظام المراسلة الآمن</title>
+    <title>Secure RSA Messaging</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --neon-green: #00ff41;
-        }
-
         body {
-            /* استدعاء الصورة بالاسم الموحد bg.jpg */
-            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                              url('bg.jpg'); 
-            background-size: cover; 
+            /* 👇 ده الرابط المباشر لملفك على GitHub */
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                              url('https://raw.githubusercontent.com/omarineooo/secure-messaging-system/main/bg.jpg'); 
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            background-color: #000; /* خلفية سوداء أساسية */
-            
+            background-color: #000;
             color: white;
             font-family: 'Fira Code', monospace;
             display: flex;
@@ -31,108 +26,82 @@
         }
 
         .container {
-            background: rgba(20, 20, 20, 0.8); /* أسود شفاف */
-            backdrop-filter: blur(35px); /* تأثير الضبابية العالي */
-            -webkit-backdrop-filter: blur(35px); 
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
             border: 1px solid rgba(0, 255, 65, 0.4);
-            max-width: 650px;
+            max-width: 600px;
             width: 90%;
         }
 
-        h1 { color: var(--neon-green); text-align: center; font-size: 1.8rem; margin-bottom: 25px; text-shadow: 0 0 10px rgba(0,255,65,0.5); }
-
+        h1 { color: #00ff41; text-align: center; margin-bottom: 25px; }
         textarea {
             width: 100%;
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid #444;
-            color: var(--neon-green);
+            color: #00ff41;
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 20px;
-            resize: none;
             box-sizing: border-box;
-            font-size: 1rem;
             outline: none;
         }
 
-        .btn-group { display: flex; gap: 15px; margin-bottom: 25px; }
-
+        .btn-group { display: flex; gap: 10px; }
         button {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            font-family: 'Fira Code', monospace;
-            transition: 0.3s;
         }
-
-        .btn-encrypt { background: var(--neon-green); color: black; }
+        .btn-encrypt { background: #00ff41; color: black; }
         .btn-clear { background: #ff4444; color: white; }
 
         .step-box {
             margin-top: 15px;
-            padding: 18px;
-            background: rgba(0, 0, 0, 0.85);
-            border-right: 5px solid var(--neon-green);
-            border-radius: 8px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border-right: 4px solid #00ff41;
+            border-radius: 5px;
         }
-
-        .label-text { color: #aaa; font-size: 0.9rem; margin-bottom: 8px; display: block; }
-        .content-text { word-break: break-all; color: var(--neon-green); font-size: 1.1rem; }
-        .original-back { color: #00d4ff; }
-
-        .footer { margin-top: 25px; font-size: 0.85rem; color: #777; text-align: center; }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>🛡️ CYBER SECURE RSA 🛡️</h1>
-    
-    <label style="display:block; margin-bottom:12px;">أدخل الرسالة السرية:</label>
-    <textarea id="messageInput" rows="3" placeholder="اكتب النص هنا..."></textarea>
-
-    <div class="btn-group">
-        <button class="btn-encrypt" onclick="processRSA()">تشفير ومعالجة 🔒</button>
-        <button class="btn-clear" onclick="clearAll()">مسح 🗑️</button>
-    </div>
-
-    <div id="resultContainer" style="display:none;">
-        <div class="step-box">
-            <span class="label-text">📡 النص المشفر:</span>
-            <div id="encryptedOutput" class="content-text"></div>
+    <div class="container">
+        <h1>🛡️ CYBER SECURE RSA</h1>
+        <textarea id="messageInput" rows="3" placeholder="اكتب النص هنا..."></textarea>
+        <div class="btn-group">
+            <button class="btn-encrypt" onclick="processRSA()">تشفير ومعالجة 🔒</button>
+            <button class="btn-clear" onclick="clearAll()">مسح 🗑️</button>
         </div>
-
-        <div class="step-box" style="border-right-color: #00d4ff;">
-            <span class="label-text">🔓 النص المستلم (فك التشفير):</span>
-            <div id="decryptedOutput" class="content-text original-back"></div>
+        <div id="resultContainer" style="display:none;">
+            <div class="step-box">
+                <div id="encryptedOutput" style="word-break: break-all; color: #00ff41;"></div>
+            </div>
+            <div class="step-box" style="border-right-color: #00d4ff;">
+                <div id="decryptedOutput" style="color: #00d4ff;"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="footer">مشروع الأمن السيبراني - جامعة برج العرب التكنولوجية - 2026</div>
-
-<script>
-    function processRSA() {
-        const msg = document.getElementById('messageInput').value;
-        if(!msg.trim()) return alert("برجاء إدخال نص!");
-        const encrypted = btoa(unescape(encodeURIComponent(msg))); 
-        const decrypted = decodeURIComponent(escape(atob(encrypted)));
-        document.getElementById('resultContainer').style.display = 'block';
-        document.getElementById('encryptedOutput').innerText = "RSA_V2_" + encrypted;
-        document.getElementById('decryptedOutput').innerText = decrypted;
-    }
-
-    function clearAll() {
-        document.getElementById('messageInput').value = '';
-        document.getElementById('resultContainer').style.display = 'none';
-    }
-</script>
-
+    <script>
+        function processRSA() {
+            const msg = document.getElementById('messageInput').value;
+            if(!msg.trim()) return;
+            const encrypted = btoa(unescape(encodeURIComponent(msg))); 
+            document.getElementById('resultContainer').style.display = 'block';
+            document.getElementById('encryptedOutput').innerText = "RSA_V2_" + encrypted;
+            document.getElementById('decryptedOutput').innerText = msg;
+        }
+        function clearAll() {
+            document.getElementById('messageInput').value = '';
+            document.getElementById('resultContainer').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
