@@ -11,9 +11,9 @@
         }
 
         body {
-            /* استخدمنا رابط مباشر من GitHub لضمان ظهور الصورة */
-            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                              url('https://raw.githubusercontent.com/omarineooo/secure-messaging-system/main/bg.jpg'); 
+            /* الاسم الموحد اللي اتفقت عليه bg.jpg */
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                              url('bg.jpg'); 
             background-size: cover; 
             background-position: center;
             background-repeat: no-repeat;
@@ -31,18 +31,19 @@
         }
 
         .container {
-            background: rgba(0, 0, 0, 0.7); 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.75); 
+            /* تأثير البلور العالي جداً لجعل الواجهة احترافية */
+            backdrop-filter: blur(35px); 
+            -webkit-backdrop-filter: blur(35px); 
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 35px rgba(0, 255, 65, 0.4);
-            border: 1px solid var(--neon-green);
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
+            border: 1px solid rgba(0, 255, 65, 0.5);
             max-width: 650px;
             width: 90%;
         }
 
-        h1 { color: var(--neon-green); text-align: center; font-size: 1.6rem; margin-bottom: 25px; text-shadow: 0 0 10px rgba(0,255,65,0.5); }
+        h1 { color: var(--neon-green); text-align: center; font-size: 1.8rem; margin-bottom: 25px; text-shadow: 0 0 10px rgba(0,255,65,0.5); }
 
         textarea {
             width: 100%;
@@ -50,13 +51,16 @@
             border: 1px solid #444;
             color: var(--neon-green);
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 20px;
             resize: none;
             box-sizing: border-box;
             font-size: 1rem;
             outline: none;
+            transition: 0.3s;
         }
+        
+        textarea:focus { border-color: var(--neon-green); box-shadow: 0 0 10px rgba(0,255,65,0.2); }
 
         .btn-group { display: flex; gap: 15px; margin-bottom: 25px; }
 
@@ -69,24 +73,31 @@
             font-weight: bold;
             font-family: 'Fira Code', monospace;
             transition: 0.3s;
+            font-size: 1rem;
         }
 
         .btn-encrypt { background: var(--neon-green); color: black; }
+        .btn-encrypt:hover { transform: scale(1.02); box-shadow: 0 0 20px var(--neon-green); }
+
         .btn-clear { background: #ff4444; color: white; }
+        .btn-clear:hover { background: #cc0000; }
 
         .step-box {
             margin-top: 15px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.85);
-            border-right: 4px solid var(--neon-green);
-            border-radius: 5px;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.8);
+            border-right: 5px solid var(--neon-green);
+            border-radius: 8px;
+            animation: slideIn 0.5s ease-out;
         }
 
-        .label-text { color: #888; font-size: 0.85rem; margin-bottom: 8px; display: block; }
-        .content-text { word-break: break-all; color: var(--neon-green); font-size: 1.1rem; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+        .label-text { color: #aaa; font-size: 0.9rem; margin-bottom: 8px; display: block; }
+        .content-text { word-break: break-all; color: var(--neon-green); font-size: 1.1rem; line-height: 1.5; }
         .original-back { color: #00d4ff; }
 
-        .footer { margin-top: 20px; font-size: 0.85rem; color: #aaa; text-align: center; }
+        .footer { margin-top: 25px; font-size: 0.85rem; color: #888; text-align: center; }
     </style>
 </head>
 <body>
@@ -94,37 +105,40 @@
 <div class="container">
     <h1>🛡️ CYBER SECURE RSA 🛡️</h1>
     
-    <label style="display:block; margin-bottom:10px;">الرسالة المراد تشفيرها:</label>
-    <textarea id="messageInput" rows="3" placeholder="اكتب رسالتك هنا..."></textarea>
+    <label style="display:block; margin-bottom:12px; font-weight: bold;">أدخل الرسالة السرية:</label>
+    <textarea id="messageInput" rows="3" placeholder="اكتب هنا ليتم تشفيرها فوراً..."></textarea>
 
     <div class="btn-group">
-        <button class="btn-encrypt" onclick="processRSA()">تشفير ومعالجة 🔒</button>
-        <button class="btn-clear" onclick="clearAll()">مسح السجل 🗑️</button>
+        <button class="btn-encrypt" onclick="processRSA()">تشفير وفك تشفير 🔒</button>
+        <button class="btn-clear" onclick="clearAll()">إعادة ضبط 🗑️</button>
     </div>
 
     <div id="resultContainer" style="display:none;">
         <div class="step-box">
-            <span class="label-text">1. النص المشفر (للمتسلل):</span>
+            <span class="label-text">📡 النص المشفر (البيانات عبر الشبكة):</span>
             <div id="encryptedOutput" class="content-text"></div>
         </div>
 
         <div class="step-box" style="border-right-color: #00d4ff;">
-            <span class="label-text">2. فك التشفير (للمستلم):</span>
+            <span class="label-text">🔓 النص المستلم (بعد فك التشفير):</span>
             <div id="decryptedOutput" class="content-text original-back"></div>
         </div>
     </div>
 </div>
 
-<div class="footer">جامعة برج العرب التكنولوجية - مشروع الأمن السيبراني - 2026</div>
+<div class="footer">مشروع نظام المراسلة الآمن - جامعة برج العرب التكنولوجية - 2026</div>
 
 <script>
     function processRSA() {
         const msg = document.getElementById('messageInput').value;
-        if(!msg.trim()) return alert("اكتب رسالة أولاً!");
+        if(!msg.trim()) return alert("برجاء إدخال نص للتشفير!");
+        
+        // محاكاة منطق التشفير RSA (Base64 Encoding للأغراض التعليمية)
         const encrypted = btoa(unescape(encodeURIComponent(msg))); 
         const decrypted = decodeURIComponent(escape(atob(encrypted)));
+
         document.getElementById('resultContainer').style.display = 'block';
-        document.getElementById('encryptedOutput').innerText = "RSA_SECURE_" + encrypted;
+        document.getElementById('encryptedOutput').innerText = "ENC_RSA_V2_" + encrypted;
         document.getElementById('decryptedOutput').innerText = decrypted;
     }
 
